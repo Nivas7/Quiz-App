@@ -1,15 +1,12 @@
+import { UserManager } from './managers/UserManger';
 import { IoManager } from "./managers/IoManager";
 
 const io = IoManager.getIo();
 
+io.listen(3000);
 
-io.on('connection', (client) => {
-  client.on('event', data => {
-    const type = data.type;
-  });
-  client.on('disconnect', () => { 
-
-   });
+const userManger = new UserManager();
+io.on('connection', (socket) => {
+  userManger.addUser(socket);
 });
 
-io.listen(3000);
